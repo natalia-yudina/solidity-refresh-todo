@@ -9,12 +9,16 @@ contract Todos {
     	bool completed;
     	address todoOwner;
 	}
+	
+	// Use this as a reference when referring to an empty TODO
+	TodoItem public EMPTY_TODO = TodoItem(0, "", "", false, 0x0000000000000000000000000000000000000000);
 
     mapping(uint256 => TodoItem) public todos;
 
     constructor() {
         todos[0] = EMPTY_TODO;
     }
-
+	uint256 public todoIncrement = 1;
+	
     mapping(address => TodoItem[]) public ownerToTodos;
 }
