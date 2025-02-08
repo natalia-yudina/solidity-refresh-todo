@@ -31,6 +31,14 @@ contract Todos {
     	ownerToTodos[msg.sender].push(todos[todoId]);
     	emit TodoCreated(todoId);
 	}
-	
+
+	function updateTodo(uint256 _todoId, string memory _todoTitle, string memory _todoDescription) public {
+    	require(_todoId <= todoIncrement, "Todo item does not exist!");
+    	TodoItem memory todoItem = todos[_todoId];
+    	todoItem.todoTitle = _todoTitle;
+    	todoItem.todoDescription = _todoDescription;
+    	todos[_todoId] = todoItem;
+    	emit TodoUpdated(_todoId);
+	}
     mapping(address => TodoItem[]) public ownerToTodos;
 }
