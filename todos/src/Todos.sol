@@ -40,5 +40,24 @@ contract Todos {
     	todos[_todoId] = todoItem;
     	emit TodoUpdated(_todoId);
 	}
+
+	function deleteTodo(uint256 _todoId) public {
+    	require(_todoId <= todoIncrement, "Todo item does not exist!");
+    	TodoItem memory todoItem = todos[_todoId];
+    	require(
+        	(
+            	!compareStringsbyBytes(todoItem.todoTitle, EMPTY_TODO.todoTitle)
+                	&& !compareStringsbyBytes(todoItem.todoDescription, EMPTY_TODO.todoDescription)
+        	),
+        	"Todo is already empty."
+    	);
+    	todos[_todoId] = EMPTY_TODO;
+    	emit TodoDeleted(_todoId);
+	}
+
+	function compareStringsbyBytes(string memory s1, string memory s2) public pure returns (bool) {
+    	return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
+	}
+		
     mapping(address => TodoItem[]) public ownerToTodos;
 }
