@@ -19,6 +19,10 @@ contract Todos {
         todos[0] = EMPTY_TODO;
     }
 	uint256 public todoIncrement = 1;
+
+	event TodoCreated(uint256 indexed todoId);
+	event TodoUpdated(uint256 indexed todoId);
+	event TodoDeleted(uint256 indexed todoId);
 	
     mapping(address => TodoItem[]) public ownerToTodos;
 }
