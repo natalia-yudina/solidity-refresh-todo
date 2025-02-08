@@ -23,6 +23,14 @@ contract Todos {
 	event TodoCreated(uint256 indexed todoId);
 	event TodoUpdated(uint256 indexed todoId);
 	event TodoDeleted(uint256 indexed todoId);
+
+	function createTodo(string memory _todoTitle, string memory _todoDescription) public {
+    	uint256 todoId = todoIncrement++;
+    	TodoItem memory todoItem = TodoItem(todoId, _todoTitle, _todoDescription, false, msg.sender);
+    	todos[todoId] = todoItem;
+    	ownerToTodos[msg.sender].push(todos[todoId]);
+    	emit TodoCreated(todoId);
+	}
 	
     mapping(address => TodoItem[]) public ownerToTodos;
 }
